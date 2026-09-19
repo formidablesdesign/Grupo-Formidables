@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grupo Formidables | Norteño en Venezuela</title>
+<meta name="description" content="Grupo Formidables lleva el acordeón y el bajo sexto del norteño mexicano a los escenarios de Venezuela. Contrataciones para bodas, quince años y eventos.">
+
+<!-- Fuentes Google -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  /* ==========================================================================
+     VARIABLES Y PALETA DE COLORES (Inspirado en estilo Cuero, Oro & Norteño)
+     ========================================================================== */
+  :root {
+    --bg: #1b120c;
+    --surface: #241810;
+    --surface-card: #2a1d14;
+    --cuero: #5c2c1d;
+    --primary: #d4a24e;       /* Oro */
+    --primary-light: #e8c98a; /* Oro suave */
+    --rojo-norteno: #a53434;
+    --text: #f3e6d0;          /* Crema */
+    --text-soft: #c9b89b;     /* Crema tenue */
+    --line: rgba(212, 162, 78, 0.2);
+    --line-bright: rgba(212, 162, 78, 0.45);
+    --wa-green: #25b95a;
+    --radius: 8px;
+    --maxw: 1140px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image: 
+      radial-gradient(circle at 15% 15%, rgba(212,162,78,0.04) 0, transparent 40%),
+      radial-gradient(circle at 85% 75%, rgba(165,52,52,0.05) 0, transparent 45%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 24px);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: 'Manrope', system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Rye', serif;
+    font-weight: 400;
+    color: var(--primary);
+    line-height: 1.2;
+    margin: 0;
+  }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section-head {
+    max-width: 640px;
+    margin-bottom: 44px;
+  }
+  .section-head h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--text); }
+  .section-head h2 em { font-style: normal; color: var(--primary); }
+  .section-head p { color: var(--text-soft); margin-top: 12px; font-size: 1.05rem; }
+  .center { text-align: center; margin-left: auto; margin-right: auto; }
+
+  /* ==========================================================================
+     BOTONES REUTILIZABLES
+     ========================================================================== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 26px;
+    border-radius: 999px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn svg { width: 18px; height: 18px; flex-shrink: 0; fill: currentColor; }
+
+  .btn-primary {
+    background: linear-gradient(180deg, var(--primary-light), var(--primary));
+    color: #1b120c;
+    box-shadow: 0 4px 16px rgba(212, 162, 78, 0.25);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212, 162, 78, 0.38);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--line-bright);
+  }
+  .btn-outline:hover {
+    background: rgba(212, 162, 78, 0.1);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+  }
+
+  .btn-whatsapp {
+    background: linear-gradient(180deg, #3fcf6e, var(--wa-green));
+    color: #0c2013;
+    box-shadow: 0 4px 16px rgba(37, 185, 90, 0.3);
+  }
+  .btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(37, 185, 90, 0.45);
+  }
+
+  /* ==========================================================================
+     HEADER / NAVEGACIÓN
+     ========================================================================== */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(27, 18, 12, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 76px;
+  }
+  .logo {
+    font-family: 'Rye', serif;
+    font-size: 1.35rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .nav-links a:hover { color: var(--primary); border-color: var(--primary); }
+  .nav-cta { display: flex; align-items: center; gap: 20px; }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px; height: 40px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .menu-toggle span {
+    width: 24px; height: 2px;
+    background: var(--primary);
+    display: block;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+  .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle.open span:nth-child(2) { opacity: 0; }
+  .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ==========================================================================
+     HERO SECTION
+     ========================================================================== */
+  .hero {
+    position: relative;
+    padding: 80px 0 90px;
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-block;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+    color: var(--text);
+  }
+  .hero h1 em { color: var(--primary); font-style: normal; }
+  .hero-sub {
+    margin-top: 18px;
+    font-size: 1.1rem;
+    color: var(--text-soft);
+    max-width: 52ch;
+  }
+  .hero-actions {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* Imagen Principal (Reemplazo de Fuelle) */
+  .hero-image {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--line-bright);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  /* ==========================================================================
+     DIVISOR CONCHOS CHARROS
+     ========================================================================== */
+  .conchos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px 0;
+  }
+  .conchos span {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--primary-light), var(--primary) 60%, #7a5222 100%);
+    box-shadow: 0 0 0 2px rgba(212,162,78,0.2);
+  }
+  .conchos .linea {
+    flex: 1; max-width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line-bright), transparent);
+  }
+
+  /* ==========================================================================
+     SOBRE NOSOTROS / HISTORIA
+     ========================================================================== */
+  .about { padding: 80px 0; }
+  .about .wrap {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .about p.lead { font-size: 1.12rem; color: var(--text); max-width: 56ch; }
+  .about p.lead + p { margin-top: 16px; color: var(--text-soft); max-width: 56ch; }
+  
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .stat {
+    background: var(--surface-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    transition: border-color 0.2s ease;
+  }
+  .stat:hover { border-color: var(--line-bright); }
+  .stat h3 { font-size: 1.1rem; color: var(--primary); margin-bottom: 6px; }
+  .stat span { font-size: 0.9rem; color: var(--text-soft); }
+
+  /* ==========================================================================
+     SECCIÓN DE VIDEOS CON PORTADA Y MODAL INTERACTIVO
+     ========================================================================== */
+  .videos {
+    padding: 80px 0;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 36px;
+  }
+
+  .video-card {
+    background: var(--surface-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .video-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--line-bright);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.45);
+  }
+  .video-card:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .video-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    overflow: hidden;
+  }
+  .video-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease, filter 0.4s ease;
+  }
+  .video-card:hover .video-thumb img {
+    transform: scale(1.08);
+    filter: brightness(0.65);
+  }
+  .video-thumb::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.8) 100%);
+  }
+
+  .play-btn-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+  }
+  .play-btn-overlay span {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--primary-light), var(--primary) 65%, #7a5222 100%);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    transition: transform 0.25s ease;
+  }
+  .video-card:hover .play-btn-overlay span { transform: scale(1.12); }
+  .play-btn-overlay svg { width: 22px; height: 22px; margin-left: 3px; fill: #1b120c; }
+
+  .video-card-info { padding: 18px; }
+  .video-card-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rojo-norteno);
+    margin-bottom: 4px;
+  }
+  .video-card-info h3 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .video-card-info p { font-size: 0.88rem; color: var(--text-soft); }
+
+  /* ==========================================================================
+     MODAL DE VIDEO
+     ========================================================================== */
+  .modal {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(10, 7, 4, 0.88);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(6px);
+  }
+  .modal.open { display: flex; }
+  .modal-box {
+    width: 100%; max-width: 860px;
+    background: #000;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line-bright);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+    position: relative;
+  }
+  .modal-video-container { position: relative; width: 100%; aspect-ratio: 16/9; }
+  .modal-video-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .modal-close {
+    position: absolute; top: -46px; right: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #1b120c;
+    border: 0; cursor: pointer;
+    font-size: 18px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s ease;
+  }
+  .modal-close:hover { transform: scale(1.1); }
+
+  /* ==========================================================================
+     SERVICIOS
+     ========================================================================== */
+  .services { padding: 80px 0; }
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .service-card {
+    padding: 32px 28px;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--radius);
+    background: var(--surface-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 30px rgba(0,0,0,0.35);
+    border-color: var(--line-bright);
+    border-left-color: var(--primary-light);
+  }
+  .service-card h3 { font-size: 1.25rem; margin-bottom: 10px; color: var(--text); }
+  .service-card p { color: var(--text-soft); font-size: 0.98rem; }
+
+  /* ==========================================================================
+     CTA FINAL & FOOTER
+     ========================================================================== */
+  .cta-final {
+    background: linear-gradient(180deg, var(--cuero) 0%, #3a1a11 100%);
+    border-top: 1px solid var(--line-bright);
+    border-bottom: 1px solid var(--line-bright);
+    color: var(--text);
+    padding: 72px 0;
+    text-align: center;
+  }
+  .cta-final h2 { color: var(--primary-light); font-size: clamp(1.8rem, 4.5vw, 2.6rem); }
+  .cta-final p { color: var(--text); max-width: 56ch; margin: 16px auto 32px; font-size: 1.08rem; }
+
+  footer {
+    background: var(--bg);
+    padding: 48px 0 28px;
+  }
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    margin: 0; padding: 0;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    color: var(--text-soft);
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: color 0.2s ease;
+  }
+  .footer-links a:hover { color: var(--primary); }
+  .copyright {
+    padding-top: 20px;
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    text-align: center;
+  }
+
+  /* Botón Flotante WhatsApp */
+  .float-wa {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 200;
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #3fcf6e, var(--wa-green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 24px rgba(37,185,90,0.45);
+    text-decoration: none;
+    animation: pulse-wa 2.4s infinite;
+    transition: transform 0.2s ease;
+  }
+  .float-wa:hover { transform: scale(1.08); }
+  .float-wa svg { width: 30px; height: 30px; fill: #0c2013; }
+
+  @keyframes pulse-wa {
+    0%, 100% { box-shadow: 0 10px 24px rgba(37,185,90,0.45), 0 0 0 0 rgba(37,185,90,0.4); }
+    50% { box-shadow: 0 10px 24px rgba(37,185,90,0.45), 0 0 0 12px rgba(37,185,90,0); }
+  }
+
+  /* ==========================================================================
+     RESPONSIVE DESIGN
+     ========================================================================== */
+  @media (max-width: 860px) {
+    .nav-links, .nav-cta .btn-outline { display: none; }
+    .menu-toggle { display: flex; }
+    
+    .nav-cta.open-mobile {
+      position: absolute;
+      top: 76px; left: 0; right: 0;
+      background: rgba(27, 18, 12, 0.98);
+      border-bottom: 1px solid var(--line);
+      flex-direction: column;
+      padding: 22px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+    }
+    .nav-cta.open-mobile .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+    }
+    .nav-cta.open-mobile .btn-outline { display: inline-flex; width: 100%; }
+    
+    .hero .wrap { grid-template-columns: 1fr; }
+    .hero-image { height: 220px; order: -1; }
+    .about .wrap { grid-template-columns: 1fr; }
+    .service-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER / MENU ===== -->
+<header>
+  <div class="wrap nav-row">
+    <a href="#inicio" class="logo">
+      <span>🎵</span> Grupo Formidables
+    </a>
+    <nav class="nav-cta" id="navCta">
+      <ul class="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#historia">Sobre nosotros</a></li>
+        <li><a href="#videos">Repertorio</a></li>
+        <li><a href="#servicios">Contrataciones</a></li>
+      </ul>
+      <a class="btn btn-outline" href="https://wa.link/5mgk66" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Sonido Norteño · Acordeón &amp; Bajo Sexto</span>
+        <h1>Grupo <em>Formidables</em></h1>
+        <p class="hero-sub">Llevamos la tradición y la fuerza de la música norteña a cada rincón de Venezuela. Explora nuestros lanzamientos y vive la experiencia en vivo.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#videos">🎵 Ver canciones</a>
+          <a class="btn btn-whatsapp" href="https://wa.link/5mgk66" target="_blank" rel="noopener">
+            <svg viewBox="0 0 32 32"><path d="M16.001 3c-7.18 0-13 5.82-13 13 0 2.29.6 4.43 1.65 6.29L3 29l6.9-1.61A12.94 12.94 0 0 0 16 29c7.18 0 13-5.82 13-13s-5.82-13-12.999-13Zm7.6 18.44c-.32.9-1.87 1.72-2.58 1.78-.66.06-1.5.09-2.42-.15-.56-.15-1.28-.4-2.2-.79-3.87-1.67-6.4-5.53-6.6-5.79-.19-.26-1.58-2.1-1.58-4 0-1.9.99-2.83 1.35-3.22.36-.39.78-.48 1.04-.48.26 0 .52 0 .75.01.24.01.56-.09.87.67.32.78 1.09 2.68 1.19 2.87.1.19.16.42.03.68-.13.26-.19.42-.38.65-.19.23-.4.51-.57.68-.19.19-.39.4-.17.78.23.39 1.01 1.67 2.17 2.7 1.49 1.33 2.75 1.74 3.13 1.94.39.19.61.16.84-.1.23-.26.97-1.13 1.23-1.52.26-.39.52-.32.87-.19.36.13 2.26 1.07 2.65 1.26.39.19.65.29.74.45.1.16.1.94-.22 1.84Z"/></svg>
+            Contratar por WhatsApp
+          </a>
+        </div>
+      </div>
+      
+      <!-- Imagen Principal (Reemplazo de Fuelle) -->
+      <img class="hero-image" src="https://i.ytimg.com/vi/4S2mKmabQMA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA0rqwQb6JE8gYWRaXldxziWBcf3w" alt="Grupo Formidables en vivo">
+      
+    </div>
+  </section>
+
+  <div class="conchos"><span></span><div class="linea"></div><span></span><div class="linea"></div><span></span></div>
+
+  <!-- ===== SOBRE NOSOTROS ===== -->
+  <section class="about" id="historia">
+    <div class="wrap">
+      <div>
+        <div class="section-head" style="margin-bottom:24px;">
+          <h2>Nuestra <em>Historia</em></h2>
+        </div>
+        <p class="lead">Grupo Formidables lleva el auténtico sonido del norteño mexicano a los escenarios de Venezuela, fusionando la pasión del acordeón y el bajo sexto con la energía de su público.</p>
+        <p>Cada presentación está diseñada para hacer bailar y emocionar, con un amplio repertorio que abarca corridos, cumbias norteñas y baladas. Disfruta de nuestras interpretaciones y lanzamientos directamente aquí en la web.</p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat">
+          <h3>Música Norteña</h3>
+          <span>Estilo &amp; Pasión</span>
+        </div>
+        <div class="stat">
+          <h3>Venezuela</h3>
+          <span>Base y actuaciones en vivo</span>
+        </div>
+        <div class="stat">
+          <h3>Acordeón &amp; Bajo Sexto</h3>
+          <span>Sonido clásico y auténtico</span>
+        </div>
+        <div class="stat">
+          <h3>En Directo</h3>
+          <span>Shows para todo evento</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VIDEOS CON PORTADA Y REPRODUCTOR MODAL ===== -->
+  <section class="videos" id="videos">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">Nuestro Repertorio</span>
+        <h2>Últimos <em>Lanzamientos</em></h2>
+        <p>Haz clic en cualquier canción para escucharla inmediatamente en el reproductor.</p>
+      </div>
+
+      <div class="video-grid">
+        
+        <!-- Canción 0 -->
+        <article class="video-card" data-video="PMg7Di0GpS4" tabindex="0" role="button" aria-label="Reproducir No Hay Novedad">
+          <div class="video-thumb">
+            <img src="https://i.ytimg.com/vi/PMg7Di0GpS4/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGUgWShKMA8=&rs=AOn4CLAPwnIQMbOSZXFyh5Q5yhRsgsnRKw"
+                 onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/PMg7Di0GpS4/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGUgWShKMA8=&rs=AOn4CLAPwnIQMbOSZXFyh5Q5yhRsgsnRKw';"
+                 alt="Portada de No Hay Novedad - Grupo Formidables" loading="lazy">
+            <div class="play-btn-overlay">
+              <span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+            </div>
+          </div>
+          <div class="video-card-info">
+            <div class="video-card-tag">Sencillo Promocional</div>
+            <h3>No Hay Novedad</h3>
+            <p>Toca para escuchar en video</p>
+          </div>
+        </article>
+
+        <!-- Canción 1 -->
+        <article class="video-card" data-video="4S2mKmabQMA" tabindex="0" role="button" aria-label="Reproducir Fíjate Bien">
+          <div class="video-thumb">
+            <img src="https://i.ytimg.com/vi/4S2mKmabQMA/maxresdefault.jpg"
+                 onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/4S2mKmabQMA/hqdefault.jpg';"
+                 alt="Portada de Fíjate Bien - Grupo Formidables" loading="lazy">
+            <div class="play-btn-overlay">
+              <span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+            </div>
+          </div>
+          <div class="video-card-info">
+            <div class="video-card-tag">Sencillo Promocional</div>
+            <h3>Fíjate Bien</h3>
+            <p>Toca para escuchar en video</p>
+          </div>
+        </article>
+
+        <!-- Canción 2 -->
+        <article class="video-card" data-video="QIqmXJUfJnw" tabindex="0" role="button" aria-label="Reproducir Tengo Miedo">
+          <div class="video-thumb">
+            <img src="https://i.ytimg.com/vi/QIqmXJUfJnw/maxresdefault.jpg"
+                 onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/QIqmXJUfJnw/hqdefault.jpg';"
+                 alt="Portada de Tengo Miedo - Grupo Formidables" loading="lazy">
+            <div class="play-btn-overlay">
+              <span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+            </div>
+          </div>
+          <div class="video-card-info">
+            <div class="video-card-tag">Sencillo</div>
+            <h3>Tengo Miedo</h3>
+            <p>Toca para escuchar en video</p>
+          </div>
+        </article>
+
+        <!-- Canción 3 -->
+        <article class="video-card" data-video="wb0C6mGLmUA" tabindex="0" role="button" aria-label="Reproducir Me Gustas Mucho">
+          <div class="video-thumb">
+            <img src="https://i.ytimg.com/vi/wb0C6mGLmUA/maxresdefault.jpg"
+                 onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/wb0C6mGLmUA/hqdefault.jpg';"
+                 alt="Portada de Me Gustas Mucho - Grupo Formidables" loading="lazy">
+            <div class="play-btn-overlay">
+              <span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+            </div>
+          </div>
+          <div class="video-card-info">
+            <div class="video-card-tag">Sencillo</div>
+            <h3>Me Gustas Mucho</h3>
+            <p>Toca para escuchar en video</p>
+          </div>
+        </article>
+
+        <!-- Canción 4 -->
+        <article class="video-card" data-video="KD9pLhWUGno" tabindex="0" role="button" aria-label="Reproducir Otra Historia">
+          <div class="video-thumb">
+            <img src="https://i.ytimg.com/vi/KD9pLhWUGno/maxresdefault.jpg"
+                 onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/KD9pLhWUGno/hqdefault.jpg';"
+                 alt="Portada de Otra Historia - Grupo Formidables" loading="lazy">
+            <div class="play-btn-overlay">
+              <span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+            </div>
+          </div>
+          <div class="video-card-info">
+            <div class="video-card-tag">Álbum</div>
+            <h3>Otra Historia</h3>
+            <p>Toca para escuchar en video</p>
+          </div>
+        </article>
+        
+<!-- Canción 6 -->
+        <article class="video-card" data-video="pp6iCPDZPe0" tabindex="0" role="button" aria-label="Reproducir Enfurecida">
+          <div class="video-thumb">
+            <img src="https://i.ytimg.com/vi/pp6iCPDZPe0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCzlQnZBtXchQlWDPJjSjLPE7XQkA"
+                 onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/pp6iCPDZPe0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCzlQnZBtXchQlWDPJjSjLPE7XQkA';"
+                 alt="Portada de Enfurecida - Grupo Formidables" loading="lazy">
+            <div class="play-btn-overlay">
+              <span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+            </div>
+          </div>
+          <div class="video-card-info">
+            <div class="video-card-tag">Tema</div>
+            <h3>Enfurecida</h3>
+            <p>Toca para escuchar en video</p>
+          </div>
+        </article>
+      </div>
+
+      <div style="text-align:center; margin-top: 40px;">
+        <a class="btn btn-outline" href="https://www.youtube.com/@grupoformidables" target="_blank" rel="noopener">Ver canal completo de YouTube</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="conchos"><span></span><div class="linea"></div><span></span><div class="linea"></div><span></span></div>
+
+  <!-- ===== SERVICIOS ===== -->
+  <section class="services" id="servicios">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Contrataciones para <em>Todo Evento</em></h2>
+        <p>Nos adaptamos a tu celebración para llevar el mejor ambiente y sonido norteño en vivo.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <h3>Bodas</h3>
+          <p>Un ambiente elegante y festivo con lo mejor de la música norteña para acompañar tu gran día.</p>
+        </div>
+        <div class="service-card">
+          <h3>Quince Años</h3>
+          <p>Repertorio dinámico e ideal para hacer bailar a la quinceañera, su familia e invitados.</p>
+        </div>
+        <div class="service-card">
+          <h3>Fiestas Privadas y Patronales</h3>
+          <p>Presentaciones llenas de energía para cumpleaños, reuniones familiares o fiestas locales.</p>
+        </div>
+        <div class="service-card">
+          <h3>Eventos Corporativos</h3>
+          <p>Show profesional de música en vivo para aniversarios de empresas y encuentros institucionales.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
+  <section class="cta-final">
+    <div class="wrap">
+      <h2>¿Quieres a Grupo Formidables en tu evento?</h2>
+      <p>Contáctanos directamente por WhatsApp para consultar disponibilidad de fechas y presupuesto.</p>
+      <a class="btn btn-primary" href="https://wa.link/5mgk66" target="_blank" rel="noopener">Contratar por WhatsApp</a>
+    </div>
+  </section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <a href="#inicio" class="logo">🪗 Grupo Formidables</a>
+      <ul class="footer-links">
+        <li><a href="#historia">Sobre nosotros</a></li>
+        <li><a href="#videos">Repertorio</a></li>
+        <li><a href="#servicios">Contrataciones</a></li>
+        <li><a href="https://www.youtube.com/@grupoformidables" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="https://www.instagram.com/grupoformidables/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.tiktok.com/@marcoantoniosegovia" target="_blank" rel="noopener">TikTok</a></li>
+        <li><a href="https://wa.link/5mgk66" target="_blank" rel="noopener">WhatsApp</a></li>
+      </ul>
+    </div>
+    <p class="copyright">© <span id="year"></span> Grupo Formidables — Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- ===== MODAL REPRODUCTOR Y FLOTANTE ===== -->
+<div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="Reproductor de Video">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar video">✕</button>
+    <div class="modal-video-container" id="modalVideoContent"></div>
+  </div>
+</div>
+
+<a class="float-wa" href="https://wa.link/5mgk66" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 32 32"><path d="M16.001 3c-7.18 0-13 5.82-13 13 0 2.29.6 4.43 1.65 6.29L3 29l6.9-1.61A12.94 12.94 0 0 0 16 29c7.18 0 13-5.82 13-13s-5.82-13-12.999-13Zm7.6 18.44c-.32.9-1.87 1.72-2.58 1.78-.66.06-1.5.09-2.42-.15-.56-.15-1.28-.4-2.2-.79-3.87-1.67-6.4-5.53-6.6-5.79-.19-.26-1.58-2.1-1.58-4 0-1.9.99-2.83 1.35-3.22.36-.39.78-.48 1.04-.48.26 0 .52 0 .75.01.24.01.56-.09.87.67.32.78 1.09 2.68 1.19 2.87.1.19.16.42.03.68-.13.26-.19.42-.38.65-.19.23-.4.51-.57.68-.19.19-.39.4-.17.78.23.39 1.01 1.67 2.17 2.7 1.49 1.33 2.75 1.74 3.13 1.94.39.19.61.16.84-.1.23-.26.97-1.13 1.23-1.52.26-.39.52-.32.87-.19.36.13 2.26 1.07 2.65 1.26.39.19.65.29.74.45.1.16.1.94-.22 1.84Z"/></svg>
+</a>
+
+<!-- ===== JAVASCRIPT UNIFICADO Y OPTIMIZADO ===== -->
+<script>
+(function() {
+  'use strict';
+
+  // Actualización de año
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // Control Menú Móvil
+  var toggle = document.getElementById('menuToggle');
+  var navCta = document.getElementById('navCta');
+
+  if (toggle && navCta) {
+    toggle.addEventListener('click', function() {
+      var isOpen = navCta.classList.toggle('open-mobile');
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    navCta.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        navCta.classList.remove('open-mobile');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // Reproductor Modal de Video
+  var modal = document.getElementById('videoModal');
+  var modalContent = document.getElementById('modalVideoContent');
+  var modalClose = document.getElementById('modalClose');
+
+  function openVideo(id) {
+    if (!id || !modal || !modalContent) return;
+    modalContent.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + 
+      '?autoplay=1&rel=0" title="Reproductor de YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideo() {
+    if (!modal || !modalContent) return;
+    modal.classList.remove('open');
+    modalContent.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.video-card').forEach(function(card) {
+    var videoId = card.getAttribute('data-video');
+    card.addEventListener('click', function() {
+      openVideo(videoId);
+    });
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openVideo(videoId);
+      }
+    });
+  });
+
+  if (modalClose) modalClose.addEventListener('click', closeVideo);
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeVideo();
+    });
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeVideo();
+  });
+})();
+</script>
+
+</body>
+</html>
